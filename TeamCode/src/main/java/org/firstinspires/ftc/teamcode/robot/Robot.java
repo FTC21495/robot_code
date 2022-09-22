@@ -8,7 +8,7 @@ public class Robot {
 
     }
 
-    public void driveFoward (double distanceInInches) {
+    public void driveForward (double distanceInInches) {
 
     }
 
