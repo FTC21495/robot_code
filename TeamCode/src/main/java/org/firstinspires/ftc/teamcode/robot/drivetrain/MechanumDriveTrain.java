@@ -2,13 +2,17 @@
 
 package org.firstinspires.ftc.teamcode.robot.drivetrain;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
+
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+@TeleOp
 public class MechanumDriveTrain {
 
     private final long MILLISECONDS_PER_FORWARD_INCH = 500;
     private final double FORWARD_POWER = 1;
-    private final long MILISECONDS_PER_ANGLE = 500;
+
 
     private DcMotor frontLeft;
     private DcMotor frontRight;
@@ -23,7 +27,10 @@ public class MechanumDriveTrain {
     }
 
     public void forward(double distanceInInches) throws InterruptedException {
-        manualControl(FORWARD_POWER, 0, 0);
+        manualControl(FORWARD_POWER, 0, 0); {
+            frontLeft.setPower(FORWARD_POWER);
+            frontRight.setPower(FORWARD_POWER);
+        }
         wait((long)(distanceInInches * MILLISECONDS_PER_FORWARD_INCH));
         manualControl(0,0,0);
     }
@@ -34,10 +41,15 @@ public class MechanumDriveTrain {
     }
 
     public void strafe(double distanceInInches) {
+        manualControl(0,0,1);
+        double strafeVal = gamepad1.right_stick_x;
 
     }
 
     public void manualControl(double forwardPower, double turnPower, double strafePower) {
+
+
+
 
     }
 }
