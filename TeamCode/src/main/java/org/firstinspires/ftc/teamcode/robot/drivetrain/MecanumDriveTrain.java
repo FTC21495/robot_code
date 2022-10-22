@@ -55,9 +55,9 @@ public class MecanumDriveTrain {
         double leftBackPower   = forwardPower - strafePower + turnPower;
         double rightBackPower  = forwardPower + strafePower - turnPower;
 
-        max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
-        max = Math.max(max, Math.abs(leftBackPower));
-        max = Math.max(max, Math.abs(rightBackPower));
+                max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
+                max = Math.max(max, Math.abs(leftBackPower));
+                max = Math.max(max, Math.abs(rightBackPower));
 
         if (max > 1.0) {
             leftFrontPower /= max;

@@ -1,11 +1,21 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.teamcode.robot.drivetrain.MechanumDrivetrain;
 
 public class Robot {
 
-    public Robot(HardwareMap hardwareMap) {
+    private MechanumDrivetrain drivetrain;
 
+    public Robot(HardwareMap hardwareMap) {
+        drivetrain = new MechanumDrivetrain(
+                hardwareMap.get(DcMotor.class, "left_front_drive"),
+                hardwareMap.get(DcMotor.class, "right_front_drive"),
+                hardwareMap.get(DcMotor.class, "left_rear_drive"),
+                hardwareMap.get(DcMotor.class, "right_rear_drive")
+        );
     }
 
     public void driveForward (double distanceInInches) {
@@ -25,6 +35,10 @@ public class Robot {
 
     }
 
+    public void manualMove (double forwardPower, double turnPower, double strafePower){
+        drivetrain.manualControl(forwardPower,turnPower, strafePower);
+
+    }
 
 
 }
