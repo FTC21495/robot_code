@@ -3,14 +3,14 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.robot.drivetrain.MechanumDrivetrain;
+import org.firstinspires.ftc.teamcode.robot.drivetrain.MecanumManual;
 
 public class Robot {
 
-    private MechanumDrivetrain drivetrain;
+    private MecanumManual drivetrain;
 
     public Robot(HardwareMap hardwareMap) {
-        drivetrain = new MechanumDrivetrain(
+        drivetrain = new MecanumManual(
                 hardwareMap.get(DcMotor.class, "left_front_drive"),
                 hardwareMap.get(DcMotor.class, "right_front_drive"),
                 hardwareMap.get(DcMotor.class, "left_rear_drive"),
