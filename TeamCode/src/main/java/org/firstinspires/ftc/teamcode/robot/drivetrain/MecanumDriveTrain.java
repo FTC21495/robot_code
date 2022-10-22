@@ -26,6 +26,11 @@ public class MecanumDriveTrain {
         this.frontRight = frontRight;
         this.rearLeft = rearLeft;
         this.rearRight = rearRight;
+
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        rearLeft.setDirection(DcMotor.Direction.FORWARD);
+        rearRight.setDirection(DcMotor.Direction.FORWARD);
     }
 
     public void forward(double distanceInInches) throws InterruptedException {
@@ -42,8 +47,29 @@ public class MecanumDriveTrain {
 
     }
 
-    public void manualControl(double forwardPower, double turnPower, double strafePower) {
+    public void manualControl(double forwardPower, double turnPower, double strafePower)
+    {
+    double max;
+        double leftFrontPower  = forwardPower + strafePower + turnPower;
+        double rightFrontPower = forwardPower - strafePower - turnPower;
+        double leftBackPower   = forwardPower - strafePower + turnPower;
+        double rightBackPower  = forwardPower + strafePower - turnPower;
 
+        max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
+        max = Math.max(max, Math.abs(leftBackPower));
+        max = Math.max(max, Math.abs(rightBackPower));
+
+        if (max > 1.0) {
+            leftFrontPower /= max;
+            rightFrontPower /= max;
+            leftBackPower /= max;
+            rightBackPower /= max;
+        }
+
+        frontLeft.setPower(leftFrontPower);
+        frontRight.setPower(rightFrontPower);
+        rearLeft.setPower(leftBackPower);
+        rearRight.setPower(rightBackPower);
     }
 }
 
