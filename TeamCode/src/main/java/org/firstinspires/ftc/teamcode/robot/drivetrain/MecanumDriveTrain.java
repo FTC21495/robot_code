@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class MecanumDriveTrain {
 
@@ -17,6 +18,11 @@ public class MecanumDriveTrain {
         this.frontRight = frontRight;
         this.rearLeft = rearLeft;
         this.rearRight = rearRight;
+
+        this.frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.rearLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.rearRight.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     public void forward(double distanceInInches) throws InterruptedException {
