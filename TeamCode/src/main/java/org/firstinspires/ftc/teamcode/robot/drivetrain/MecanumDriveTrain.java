@@ -1,16 +1,7 @@
-
-
 package org.firstinspires.ftc.teamcode.robot.drivetrain;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
-
-
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@TeleOp
 public class MecanumDriveTrain {
 
     private final long MILLISECONDS_PER_FORWARD_INCH = 500;
@@ -26,11 +17,6 @@ public class MecanumDriveTrain {
         this.frontRight = frontRight;
         this.rearLeft = rearLeft;
         this.rearRight = rearRight;
-
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        rearLeft.setDirection(DcMotor.Direction.FORWARD);
-        rearRight.setDirection(DcMotor.Direction.FORWARD);
     }
 
     public void forward(double distanceInInches) throws InterruptedException {
@@ -72,4 +58,6 @@ public class MecanumDriveTrain {
         rearRight.setPower(rightBackPower);
     }
 }
+
+
 
