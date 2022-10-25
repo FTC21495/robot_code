@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
-@TeleOp(name="MecanumDrive Test Op", group="Opmode")
-class MecanumTestOpMode extends OpMode {
+@TeleOp(name="MecanumDrive Test Op", group="Iterative Opmode")
+public class MecanumTestOpMode extends OpMode {
 
     private Robot maple;
 
