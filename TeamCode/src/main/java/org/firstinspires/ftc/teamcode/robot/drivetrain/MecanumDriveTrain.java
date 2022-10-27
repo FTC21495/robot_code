@@ -3,8 +3,9 @@ package org.firstinspires.ftc.teamcode.robot.drivetrain;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-public class MecanumDriveTrain {
 
+public class MecanumDriveTrain {
+    private static long ENCODER_TICKS_PER_INCH = 20;  //385 ticks per revolution
     private final long MILLISECONDS_PER_FORWARD_INCH = 500;
     private final double FORWARD_POWER = 1;
 
@@ -12,6 +13,8 @@ public class MecanumDriveTrain {
     private DcMotor frontRight;
     private DcMotor rearLeft;
     private DcMotor rearRight;
+
+
 
     public MecanumDriveTrain(DcMotor frontLeft, DcMotor frontRight, DcMotor rearLeft, DcMotor rearRight) {
         this.frontLeft = frontLeft;
@@ -23,9 +26,15 @@ public class MecanumDriveTrain {
         this.rearLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         this.frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         this.rearRight.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        this.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.rearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.rearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void forward(double distanceInInches) throws InterruptedException {
+        resetEncoders();
         manualControl(FORWARD_POWER, 0, 0);
         wait((long)(distanceInInches * MILLISECONDS_PER_FORWARD_INCH));
         manualControl(0,0,0);
@@ -63,6 +72,15 @@ public class MecanumDriveTrain {
         rearLeft.setPower(leftBackPower);
         rearRight.setPower(rightBackPower);
     }
+
+    private void resetEncoders(){
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+    }
+
 }
 
 
