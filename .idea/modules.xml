@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/robot_code.iml" filepath="$PROJECT_DIR$/.idea/modules/robot_code.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FtcRobotController/robot_code.FtcRobotController.iml" filepath="$PROJECT_DIR$/.idea/modules/FtcRobotController/robot_code.FtcRobotController.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FtcRobotController/robot_code.FtcRobotController.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/FtcRobotController/robot_code.FtcRobotController.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FtcRobotController/robot_code.FtcRobotController.main.iml" filepath="$PROJECT_DIR$/.idea/modules/FtcRobotController/robot_code.FtcRobotController.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FtcRobotController/robot_code.FtcRobotController.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/FtcRobotController/robot_code.FtcRobotController.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TeamCode/robot_code.TeamCode.iml" filepath="$PROJECT_DIR$/.idea/modules/TeamCode/robot_code.TeamCode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TeamCode/robot_code.TeamCode.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/TeamCode/robot_code.TeamCode.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TeamCode/robot_code.TeamCode.main.iml" filepath="$PROJECT_DIR$/.idea/modules/TeamCode/robot_code.TeamCode.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TeamCode/robot_code.TeamCode.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/TeamCode/robot_code.TeamCode.unitTest.iml" />
+    </modules>
+  </component>
+</project>
