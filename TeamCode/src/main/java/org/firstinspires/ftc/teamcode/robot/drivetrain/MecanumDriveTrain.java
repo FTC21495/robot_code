@@ -33,6 +33,11 @@ public class MecanumDriveTrain {
         this.rearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.rearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        this.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.rearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void forward(double distanceInInches) throws InterruptedException {
