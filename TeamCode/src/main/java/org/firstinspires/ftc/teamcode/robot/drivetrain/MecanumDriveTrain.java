@@ -5,7 +5,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 public class MecanumDriveTrain {
-    private static long ENCODER_TICKS_PER_INCH = 20;  //385 ticks per revolution
+    private static double WHEEL_DIAMETER_INCHES = 3.78; //96 mm diameter Mecanum Wheels
+    private static long ENCODER_TICKS_PER_REV = 538; // 5203 Series Yellow Jacket Planetary Gear Motor (PPR at Output Shaft)
+    private static double ENCODER_TICKS_PER_INCH = (ENCODER_TICKS_PER_REV)/(WHEEL_DIAMETER_INCHES*3.14);  //538 ticks per revolution
     private final long MILLISECONDS_PER_FORWARD_INCH = 500;
     private final double FORWARD_POWER = 1;
 
