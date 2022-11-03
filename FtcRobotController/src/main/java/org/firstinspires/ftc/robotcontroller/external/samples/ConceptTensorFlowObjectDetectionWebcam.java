@@ -50,7 +50,6 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
  * is explained below.
  */
 @TeleOp(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
-@Disabled
 public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
 
     /*
@@ -83,7 +82,7 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
      * and paste it in to your code on the next line, between the double quotes.
      */
     private static final String VUFORIA_KEY =
-            " -- YOUR NEW VUFORIA KEY GOES HERE  --- ";
+            "Ad9UZv//////AAABmY/6WOcKm0KzmWSPiDU/xghI/Oh2EKAh6oglAIk6dhZ8zf53pzqS6+Zfz/cmdk3YULXTr4CHrwZI2CcV2s+nzDu4sK2bHm5eXyjoM60M0HJ7DnWvA6nWPHxIzBccqGWbqI6Qfa0ZkXVvglP5dLJGEFoEr1rrYFKja9JExnj6WMgNHYnXIurNxOGFCasEI0HVwN7xJ4RfiHo3M5X/A5g+jwWN6xKnYCrk79Z+D4CdT6k1dTydehK/38lEk7nY8s5VTU5+SzVNnS0LhZ11YCUsqk4VxeLXC6COpWJhgPi8dEDH51v+GUixReT7cSldAEeHw3pJS1PaHksgqvFtUIMfv/Q4AQrSYNCEYD6IOHrCrL/3";
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
@@ -142,7 +141,7 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
                             double width  = Math.abs(recognition.getRight() - recognition.getLeft()) ;
                             double height = Math.abs(recognition.getTop()  - recognition.getBottom()) ;
 
-                            telemetry.addData(""," ");
+                            telemetry.addData(""," ");f
                             telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100 );
                             telemetry.addData("- Position (Row/Col)","%.0f / %.0f", row, col);
                             telemetry.addData("- Size (Width/Height)","%.0f / %.0f", width, height);
