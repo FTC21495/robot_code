@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
+// TODO: Add timing delay
+
+
 @TeleOp (group = "TeleOp", name = "servoTest")
 public class ServoTest extends OpMode {
     private Servo servo;
