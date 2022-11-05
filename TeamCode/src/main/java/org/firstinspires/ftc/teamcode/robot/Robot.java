@@ -18,7 +18,7 @@ public class Robot {
         );
     }
 
-    public void driveForward (double distanceInInches) throws InterruptedException {
+    public void driveForward (double distanceInInches) {
         drivetrain.forward(distanceInInches);
 
     }
@@ -34,6 +34,14 @@ public class Robot {
     public void turnRight (double angleInDegrees){
 
     }
+
+    public void strafeLeft (double distanceInInches){
+
+    }
+    public void strafeRight (double distanceInInches){
+
+    }
+
 
     public void manualMove (double forwardPower, double turnPower, double strafePower){
         drivetrain.manualControl(forwardPower,turnPower, strafePower);
