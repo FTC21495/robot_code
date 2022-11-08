@@ -8,6 +8,10 @@ public class MecanumDriveTrain {
     private final double WHEEL_DIAMETER_INCHES = 3.875; //96 mm diameter Mecanum Wheels
     private final long ENCODER_TICKS_PER_REV = 538; // 5203 Series Yellow Jacket Planetary Gear Motor (PPR at Output Shaft)
     private final double ENCODER_TICKS_PER_INCH = (ENCODER_TICKS_PER_REV) / (WHEEL_DIAMETER_INCHES * 3.14);
+    private final double ROBOT_TURN_CIRCLE_DIAMETER_INCHES = 15.75;//Don't know for sure right now, just to test turning in degrees with encoders
+    private final double ROBOT_TURN_CIRCLE_CIRCUMFERENCE_INCHES = (ROBOT_TURN_CIRCLE_DIAMETER_INCHES * 3.14);
+    private final double STRAFE_FRICTION_LOSS_DISTANCE_FACTOR_FRONT = 1.145;
+    private final double STRAFE_FRICTION_LOSS_DISTANCE_FACTOR_BACK = 1.14;
     private final long MILLISECONDS_PER_FORWARD_INCH = 500;
     private final double FORWARD_POWER = .25;
 
@@ -61,6 +65,7 @@ public class MecanumDriveTrain {
 
         while ((frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy()
                 && rearRight.isBusy())) {
+
         }
 
         frontLeft.setPower(0);
@@ -70,25 +75,168 @@ public class MecanumDriveTrain {
 
     }
 
-    public void turn(double angleInDegreesClockwise) {
+    public void backward(double distanceInInches) {
+        resetEncoders();
+        int newTarget = (int)(distanceInInches * ENCODER_TICKS_PER_INCH);
+
+        frontLeft.setTargetPosition(-newTarget);
+        rearLeft.setTargetPosition(-newTarget);
+        frontRight.setTargetPosition(-newTarget);
+        rearRight.setTargetPosition(-newTarget);
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontLeft.setPower(-FORWARD_POWER);
+        rearLeft.setPower(-FORWARD_POWER);
+        frontRight.setPower(-FORWARD_POWER);
+        rearRight.setPower(-FORWARD_POWER);
+
+        while ((frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy()
+                && rearRight.isBusy())) {
+
+        }
+
+        frontLeft.setPower(0);
+        rearLeft.setPower(0);
+        frontRight.setPower(0);
+        rearRight.setPower(0);
 
     }
 
-    public void strafe(double distanceInInches) {
+    public void turnRight(double angleInDegreesClockwise) {
+        resetEncoders();
+        int newTarget = (int)((angleInDegreesClockwise / 360) * ROBOT_TURN_CIRCLE_CIRCUMFERENCE_INCHES);
+
+        frontLeft.setTargetPosition(newTarget);
+        rearLeft.setTargetPosition(newTarget);
+        frontRight.setTargetPosition(-newTarget);
+        rearRight.setTargetPosition(-newTarget);
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontLeft.setPower(FORWARD_POWER);
+        rearLeft.setPower(FORWARD_POWER);
+        frontRight.setPower(-(FORWARD_POWER));
+        rearRight.setPower(-(FORWARD_POWER));
+
+        while ((frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy()
+                && rearRight.isBusy())) {
+
+        }
+
+        frontLeft.setPower(0);
+        rearLeft.setPower(0);
+        frontRight.setPower(0);
+        rearRight.setPower(0);
+    }
+    public void turnLeft(double angleInDegreesClockwise) {
+        resetEncoders();
+        int newTarget = (int)((angleInDegreesClockwise / 360) * ROBOT_TURN_CIRCLE_CIRCUMFERENCE_INCHES);
+
+        frontLeft.setTargetPosition(-newTarget);
+        rearLeft.setTargetPosition(-newTarget);
+        frontRight.setTargetPosition(newTarget);
+        rearRight.setTargetPosition(newTarget);
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontLeft.setPower(-FORWARD_POWER);
+        rearLeft.setPower(-FORWARD_POWER);
+        frontRight.setPower((FORWARD_POWER));
+        rearRight.setPower((FORWARD_POWER));
+
+        while ((frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy()
+                && rearRight.isBusy())) {
+
+        }
+
+        frontLeft.setPower(0);
+        rearLeft.setPower(0);
+        frontRight.setPower(0);
+        rearRight.setPower(0);
+    }
+
+    public void strafeRight(double distanceInInches) {
+        resetEncoders();
+        int newFrontTarget = (int)(STRAFE_FRICTION_LOSS_DISTANCE_FACTOR_FRONT * (distanceInInches * ENCODER_TICKS_PER_INCH));
+        int newBackTarget = (int)(STRAFE_FRICTION_LOSS_DISTANCE_FACTOR_BACK * (distanceInInches * ENCODER_TICKS_PER_INCH));
+        frontLeft.setTargetPosition(newFrontTarget);
+        rearLeft.setTargetPosition(-newBackTarget);
+        frontRight.setTargetPosition(-newFrontTarget);
+        rearRight.setTargetPosition(newBackTarget);
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontLeft.setPower((FORWARD_POWER));
+        rearLeft.setPower(-FORWARD_POWER);
+        frontRight.setPower(-FORWARD_POWER);
+        rearRight.setPower((FORWARD_POWER));
+
+        while ((frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy()
+                && rearRight.isBusy())) {
+
+        }
+
+        frontLeft.setPower(0);
+        rearLeft.setPower(0);
+        frontRight.setPower(0);
+        rearRight.setPower(0);
+
+    }
+    public void strafeLeft(double distanceInInches) {
+        resetEncoders();
+        int newTarget = (int)((distanceInInches * ENCODER_TICKS_PER_INCH));
+
+        frontLeft.setTargetPosition(newTarget);
+        rearLeft.setTargetPosition(-newTarget);
+        frontRight.setTargetPosition(-newTarget);
+        rearRight.setTargetPosition(newTarget);
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontLeft.setPower(FORWARD_POWER);
+        rearLeft.setPower(-FORWARD_POWER);
+        frontRight.setPower(-FORWARD_POWER);
+        rearRight.setPower(FORWARD_POWER);
+
+        while ((frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy()
+                && rearRight.isBusy())) {
+
+        }
+
+        frontLeft.setPower(0);
+        rearLeft.setPower(0);
+        frontRight.setPower(0);
+        rearRight.setPower(0);
 
     }
 
     public void manualControl(double forwardPower, double turnPower, double strafePower)
     {
-    double max;
+        double max;
         double leftFrontPower  = forwardPower + strafePower + turnPower;
         double rightFrontPower = forwardPower - strafePower - turnPower;
         double leftBackPower   = forwardPower - strafePower + turnPower;
         double rightBackPower  = forwardPower + strafePower - turnPower;
 
-                max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
-                max = Math.max(max, Math.abs(leftBackPower));
-                max = Math.max(max, Math.abs(rightBackPower));
+        max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
+        max = Math.max(max, Math.abs(leftBackPower));
+        max = Math.max(max, Math.abs(rightBackPower));
 
         if (max > 1.0) {
             leftFrontPower /= max;
@@ -117,6 +265,7 @@ public class MecanumDriveTrain {
 
 
 }
+
 
 
 

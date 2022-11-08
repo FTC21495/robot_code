@@ -15,6 +15,7 @@ public class AutonomousDriveTrainTest extends LinearOpMode {
 
         waitForStart();
 
-        maple.driveForward(48);
+        maple.turnRight(180);
+
     }
 }
