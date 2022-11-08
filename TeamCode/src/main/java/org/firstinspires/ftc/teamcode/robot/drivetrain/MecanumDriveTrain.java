@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot.drivetrain;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
@@ -14,6 +16,7 @@ public class MecanumDriveTrain {
     private final double STRAFE_FRICTION_LOSS_DISTANCE_FACTOR_BACK = 1.14;
     private final long MILLISECONDS_PER_FORWARD_INCH = 500;
     private final double FORWARD_POWER = .25;
+    private final double halfSquareLength = 12; // Half a square tile (12 in.)
 
     private DcMotor frontLeft;
     private DcMotor frontRight;
@@ -263,6 +266,11 @@ public class MecanumDriveTrain {
 
     }
 
+    public void dpadControl (){
+        if (gamepad1.dpad_up){
+            forward(halfSquareLength);
+        }
+    }
 
 }
 

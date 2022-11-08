@@ -33,13 +33,13 @@ public class MecanumTestOpMode extends OpMode {
     private void setSensitivityChange(){
 
         // Check to see whether or not a button has been pressed
-        if (gamepad1.dpad_up || gamepad1.dpad_down ) {
+        if (gamepad1.right_bumper || gamepad1.left_bumper) {
             if (!wasSensitivityChangedLastLoop) {
-                if (gamepad1.dpad_up) {
+                if (gamepad1.right_bumper) {
                     drivetrainSensitivity += SENSITIVITY_CHANGE;
                 }
                 // If it has been pressed, change sensitivity
-                if (gamepad1.dpad_down && drivetrainSensitivity > 1) {
+                if (gamepad1.left_bumper && drivetrainSensitivity > 1) {
                     drivetrainSensitivity -= SENSITIVITY_CHANGE;
                 }
                 // Log the change in sensitivity
@@ -58,6 +58,9 @@ public class MecanumTestOpMode extends OpMode {
 
     }
 
+    private void setDirectionalControl(){
+
+
+    }
+
 }
-
-
