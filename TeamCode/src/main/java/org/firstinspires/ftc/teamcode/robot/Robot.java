@@ -30,17 +30,21 @@ public class Robot {
     }
 
     public void turnLeft (double angleInDegrees){
+
         drivetrain.turnLeft(angleInDegrees);
     }
 
     public void turnRight (double angleInDegrees){
+
         drivetrain.turnRight(angleInDegrees);
     }
 
     public void strafeLeft (double distanceInInches){
+
         drivetrain.strafeLeft(distanceInInches);
     }
     public void strafeRight (double distanceInInches){
+
         drivetrain.strafeRight(distanceInInches);
     }
 

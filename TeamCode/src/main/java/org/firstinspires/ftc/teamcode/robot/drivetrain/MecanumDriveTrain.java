@@ -12,11 +12,15 @@ public class MecanumDriveTrain {
     private final double ENCODER_TICKS_PER_INCH = (ENCODER_TICKS_PER_REV) / (WHEEL_DIAMETER_INCHES * 3.14);
     private final double ROBOT_TURN_CIRCLE_DIAMETER_INCHES = 15.75;//Don't know for sure right now, just to test turning in degrees with encoders
     private final double ROBOT_TURN_CIRCLE_CIRCUMFERENCE_INCHES = (ROBOT_TURN_CIRCLE_DIAMETER_INCHES * 3.14);
-    private final double STRAFE_FRICTION_LOSS_DISTANCE_FACTOR_FRONT = 1.145;
+    private final double STRAFE_FRICTION_LOSS_DISTANCE_FACTOR_FRONT = 1.15;
     private final double STRAFE_FRICTION_LOSS_DISTANCE_FACTOR_BACK = 1.14;
+    private final double TURN_FRICTION_LOSS_DISTANCE_FACTOR = 1.465;
     private final long MILLISECONDS_PER_FORWARD_INCH = 500;
     private final double FORWARD_POWER = .25;
     private final double halfSquareLength = 12; // Half a square tile (12 in.)
+    private volatile boolean stopRequested = false;
+    private volatile boolean isStarted = false;
+    private boolean userMonitoredForStart = false;
 
     private DcMotor frontLeft;
     private DcMotor frontRight;
@@ -45,6 +49,31 @@ public class MecanumDriveTrain {
         this.rearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+    public final boolean isStopRequested() {
+        return this.stopRequested || Thread.currentThread().isInterrupted();
+    }
+
+    public final boolean isStarted() {
+        if (this.isStarted) {
+            this.userMonitoredForStart = true;
+        }
+
+        return this.isStarted || Thread.currentThread().isInterrupted();
+    }
+
+    public final void idle() {
+        Thread.yield();
+    }
+
+    private final boolean opModeIsActive() {
+        boolean isActive = !this.isStopRequested() && this.isStarted();
+        if (isActive) {
+            this.idle();
+        }
+
+        return isActive;
     }
 
     public void forward(double distanceInInches) {
@@ -111,7 +140,7 @@ public class MecanumDriveTrain {
 
     public void turnRight(double angleInDegreesClockwise) {
         resetEncoders();
-        int newTarget = (int)((angleInDegreesClockwise / 360) * ROBOT_TURN_CIRCLE_CIRCUMFERENCE_INCHES);
+        int newTarget = (int)((TURN_FRICTION_LOSS_DISTANCE_FACTOR * ((angleInDegreesClockwise / 360) * ROBOT_TURN_CIRCLE_CIRCUMFERENCE_INCHES)) * ENCODER_TICKS_PER_INCH);
 
         frontLeft.setTargetPosition(newTarget);
         rearLeft.setTargetPosition(newTarget);
@@ -140,7 +169,7 @@ public class MecanumDriveTrain {
     }
     public void turnLeft(double angleInDegreesClockwise) {
         resetEncoders();
-        int newTarget = (int)((angleInDegreesClockwise / 360) * ROBOT_TURN_CIRCLE_CIRCUMFERENCE_INCHES);
+        int newTarget = (int)(TURN_FRICTION_LOSS_DISTANCE_FACTOR * ((angleInDegreesClockwise / 360) * ROBOT_TURN_CIRCLE_CIRCUMFERENCE_INCHES) * ENCODER_TICKS_PER_INCH);
 
         frontLeft.setTargetPosition(-newTarget);
         rearLeft.setTargetPosition(-newTarget);
@@ -200,12 +229,13 @@ public class MecanumDriveTrain {
     }
     public void strafeLeft(double distanceInInches) {
         resetEncoders();
-        int newTarget = (int)((distanceInInches * ENCODER_TICKS_PER_INCH));
+        int newFrontTarget = (int)(STRAFE_FRICTION_LOSS_DISTANCE_FACTOR_FRONT * (distanceInInches * ENCODER_TICKS_PER_INCH));
+        int newBackTarget = (int)(STRAFE_FRICTION_LOSS_DISTANCE_FACTOR_BACK * (distanceInInches * ENCODER_TICKS_PER_INCH));
 
-        frontLeft.setTargetPosition(newTarget);
-        rearLeft.setTargetPosition(-newTarget);
-        frontRight.setTargetPosition(-newTarget);
-        rearRight.setTargetPosition(newTarget);
+        frontLeft.setTargetPosition(newFrontTarget);
+        rearLeft.setTargetPosition(-newBackTarget);
+        frontRight.setTargetPosition(-newFrontTarget);
+        rearRight.setTargetPosition(newBackTarget);
 
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -217,7 +247,7 @@ public class MecanumDriveTrain {
         frontRight.setPower(-FORWARD_POWER);
         rearRight.setPower(FORWARD_POWER);
 
-        while ((frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy()
+        while (opModeIsActive() && (frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy()
                 && rearRight.isBusy())) {
 
         }
