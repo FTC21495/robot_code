@@ -5,6 +5,8 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gam
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.robotcore.external.Supplier;
+
 
 public class MecanumDriveTrain {
     private final double WHEEL_DIAMETER_INCHES = 3.875; //96 mm diameter Mecanum Wheels
@@ -18,22 +20,21 @@ public class MecanumDriveTrain {
     private final long MILLISECONDS_PER_FORWARD_INCH = 500;
     private final double FORWARD_POWER = .25;
     private final double halfSquareLength = 12; // Half a square tile (12 in.)
-    private volatile boolean stopRequested = false;
-    private volatile boolean isStarted = false;
-    private boolean userMonitoredForStart = false;
 
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor rearLeft;
     private DcMotor rearRight;
+    private Supplier<Boolean> opModeIsActive;
 
 
 
-    public MecanumDriveTrain(DcMotor frontLeft, DcMotor frontRight, DcMotor rearLeft, DcMotor rearRight) {
+    public MecanumDriveTrain(DcMotor frontLeft, DcMotor frontRight, DcMotor rearLeft, DcMotor rearRight, Supplier<Boolean> opModeIsActive) {
         this.frontLeft = frontLeft;
         this.frontRight = frontRight;
         this.rearLeft = rearLeft;
         this.rearRight = rearRight;
+        this.opModeIsActive = opModeIsActive;
 
         this.frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         this.rearLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -51,30 +52,6 @@ public class MecanumDriveTrain {
         this.rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public final boolean isStopRequested() {
-        return this.stopRequested || Thread.currentThread().isInterrupted();
-    }
-
-    public final boolean isStarted() {
-        if (this.isStarted) {
-            this.userMonitoredForStart = true;
-        }
-
-        return this.isStarted || Thread.currentThread().isInterrupted();
-    }
-
-    public final void idle() {
-        Thread.yield();
-    }
-
-    private final boolean opModeIsActive() {
-        boolean isActive = !this.isStopRequested() && this.isStarted();
-        if (isActive) {
-            this.idle();
-        }
-
-        return isActive;
-    }
 
     public void forward(double distanceInInches) {
         resetEncoders();
@@ -95,8 +72,7 @@ public class MecanumDriveTrain {
         frontRight.setPower(FORWARD_POWER);
         rearRight.setPower(FORWARD_POWER);
 
-        while ((frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy()
-                && rearRight.isBusy())) {
+        while (areMotorsBusy() && opModeIsActive.get()) {
 
         }
 
@@ -126,8 +102,7 @@ public class MecanumDriveTrain {
         frontRight.setPower(-FORWARD_POWER);
         rearRight.setPower(-FORWARD_POWER);
 
-        while ((frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy()
-                && rearRight.isBusy())) {
+        while (areMotorsBusy() && opModeIsActive.get()) {
 
         }
 
@@ -157,8 +132,7 @@ public class MecanumDriveTrain {
         frontRight.setPower(-(FORWARD_POWER));
         rearRight.setPower(-(FORWARD_POWER));
 
-        while ((frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy()
-                && rearRight.isBusy())) {
+        while (areMotorsBusy() && opModeIsActive.get()) {
 
         }
 
@@ -186,8 +160,7 @@ public class MecanumDriveTrain {
         frontRight.setPower((FORWARD_POWER));
         rearRight.setPower((FORWARD_POWER));
 
-        while ((frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy()
-                && rearRight.isBusy())) {
+        while (areMotorsBusy() && opModeIsActive.get()) {
 
         }
 
@@ -216,8 +189,7 @@ public class MecanumDriveTrain {
         frontRight.setPower(-FORWARD_POWER);
         rearRight.setPower((FORWARD_POWER));
 
-        while ((frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy()
-                && rearRight.isBusy())) {
+        while (areMotorsBusy() && opModeIsActive.get()) {
 
         }
 
@@ -232,23 +204,22 @@ public class MecanumDriveTrain {
         int newFrontTarget = (int)(STRAFE_FRICTION_LOSS_DISTANCE_FACTOR_FRONT * (distanceInInches * ENCODER_TICKS_PER_INCH));
         int newBackTarget = (int)(STRAFE_FRICTION_LOSS_DISTANCE_FACTOR_BACK * (distanceInInches * ENCODER_TICKS_PER_INCH));
 
-        frontLeft.setTargetPosition(newFrontTarget);
-        rearLeft.setTargetPosition(-newBackTarget);
-        frontRight.setTargetPosition(-newFrontTarget);
-        rearRight.setTargetPosition(newBackTarget);
+        frontLeft.setTargetPosition(-newFrontTarget);
+        rearLeft.setTargetPosition(newBackTarget);
+        frontRight.setTargetPosition(newFrontTarget);
+        rearRight.setTargetPosition(-newBackTarget);
 
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        frontLeft.setPower(FORWARD_POWER);
-        rearLeft.setPower(-FORWARD_POWER);
-        frontRight.setPower(-FORWARD_POWER);
-        rearRight.setPower(FORWARD_POWER);
+        frontLeft.setPower(-FORWARD_POWER);
+        rearLeft.setPower(FORWARD_POWER);
+        frontRight.setPower(FORWARD_POWER);
+        rearRight.setPower(-FORWARD_POWER);
 
-        while (opModeIsActive() && (frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy()
-                && rearRight.isBusy())) {
+        while (areMotorsBusy() && opModeIsActive.get()) {
 
         }
 
@@ -294,6 +265,10 @@ public class MecanumDriveTrain {
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+    }
+
+    private boolean areMotorsBusy(){
+        return frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy() && rearRight.isBusy();
     }
 
     public void dpadControl (){

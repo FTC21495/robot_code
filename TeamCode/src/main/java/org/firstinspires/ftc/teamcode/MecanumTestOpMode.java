@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -15,20 +17,26 @@ public class MecanumTestOpMode extends OpMode {
 
     private double drivetrainSensitivity = INITIAL_DRIVETRAIN_SENSITIVITY;
     private boolean wasSensitivityChangedLastLoop;
+    private boolean isActive = true;
 
     @Override
     public void init() {
-        maple = new Robot(hardwareMap);
+        maple = new Robot(hardwareMap, () -> isActive);
     }
 
     @Override
     public void loop() {
         setDrivetrainPower();
         setSensitivityChange();
+        setDpadControl();
 
       telemetry.update();
     }
 
+    @Override
+    public void stop(){
+        isActive = false;
+    }
 
     private void setSensitivityChange(){
 
@@ -58,8 +66,20 @@ public class MecanumTestOpMode extends OpMode {
 
     }
 
-    private void setDirectionalControl(){
 
+    private void setDpadControl(){
+        if (gamepad1.dpad_up){
+            maple.driveForward(12);
+        }
+        if (gamepad1.dpad_down){
+            maple.driveBackwards(12);
+        }
+        if (gamepad1.dpad_right){
+            maple.strafeRight(12);
+        }
+        if (gamepad1.dpad_left){
+            maple.strafeLeft(12);
+        }
 
     }
 

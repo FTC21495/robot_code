@@ -6,17 +6,19 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robot.drivetrain.MecanumDriveTrain;
+import org.firstinspires.ftc.robotcore.external.Supplier;
 
 public class Robot {
 
     private MecanumDriveTrain drivetrain;
 
-    public Robot(HardwareMap hardwareMap) {
+    public Robot(HardwareMap hardwareMap, Supplier<Boolean>opModeIsActive) {
         drivetrain = new MecanumDriveTrain(
                 hardwareMap.get(DcMotor.class, "left_front_drive"),
                 hardwareMap.get(DcMotor.class, "right_front_drive"),
                 hardwareMap.get(DcMotor.class, "left_rear_drive"),
-                hardwareMap.get(DcMotor.class, "right_rear_drive")
+                hardwareMap.get(DcMotor.class, "right_rear_drive"),
+                opModeIsActive
         );
     }
 
