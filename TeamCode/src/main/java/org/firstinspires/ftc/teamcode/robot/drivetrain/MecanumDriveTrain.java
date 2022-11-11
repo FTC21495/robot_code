@@ -297,8 +297,18 @@ public class MecanumDriveTrain {
     }
 
     public void dpadControl (){
+        // Maybe use case switches instead?
         if (gamepad1.dpad_up){
             forward(halfSquareLength);
+        }
+        if (gamepad1.dpad_down){
+            forward(-halfSquareLength);
+        }
+        if (gamepad1.dpad_right){
+            strafeRight(halfSquareLength);
+        }
+        if (gamepad1.dpad_left){
+            strafeLeft(halfSquareLength);
         }
     }
 
