@@ -93,8 +93,8 @@ public class Robot {
 
         telemetry.addLine()
                 .addData("Red", "%.3f", redSaturation)
-                .addData("Green", "%.3f", blueSaturation)
-                .addData("Blue", "%.3f", greenSaturation);
+                .addData("Green", "%.3f", greenSaturation)
+                .addData("Blue", "%.3f", blueSaturation);
         telemetry.update();
 
         if ((redSaturation > blueSaturation) && (redSaturation > greenSaturation)){
@@ -103,11 +103,11 @@ public class Robot {
 
         } else if ((blueSaturation > redSaturation) && (blueSaturation > greenSaturation)){
 
-            return ColorSensorColor.GREEN;//Seems backwards, is what color sensor actually read
+            return ColorSensorColor.BLUE;//Seems backwards, is what color sensor actually read
 
         }
 
-        return ColorSensorColor.BLUE;//Seems backwards, is what color sensor actually read
+        return ColorSensorColor.GREEN;//Seems backwards, is what color sensor actually read
 
     }
 
