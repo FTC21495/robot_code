@@ -21,7 +21,7 @@ public class MecanumTestOpMode extends OpMode {
 
     @Override
     public void init() {
-        maple = new Robot(hardwareMap, () -> isActive);
+        maple = new Robot(hardwareMap, () -> isActive, telemetry);
     }
 
     @Override

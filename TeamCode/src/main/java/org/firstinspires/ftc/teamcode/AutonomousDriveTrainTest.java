@@ -11,21 +11,30 @@ public class AutonomousDriveTrainTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Robot maple = new Robot(hardwareMap, this::opModeIsActive);
+        Robot maple = new Robot(hardwareMap, this::opModeIsActive, telemetry);
 
         waitForStart();
 
-        maple.driveForward(96);
+        maple.driveForward(20.5);
 
-        maple.driveBackwards(48);
+        switch (maple.getColorFromColorSensor()) {
 
-        maple.turnLeft(360);
+            case RED:                               // 1
+                maple.driveBackwards(17.5);
+                maple.strafeLeft(24);
+                maple.driveForward(27);
+                break;
 
-        maple.turnRight(270);
+            case GREEN:                             // 2
+                maple.driveForward(7.5);
+                break;
 
-        maple.strafeRight(48);
-
-        maple.strafeLeft(90);
+            case BLUE:                              // 3
+                maple.driveBackwards(17.5);
+                maple.strafeRight(24);
+                maple.driveForward(27);
+                break;
+        }
 
     }
 }

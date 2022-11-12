@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gam
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 
 import org.firstinspires.ftc.robotcore.external.Supplier;
 
@@ -21,12 +22,12 @@ public class MecanumDriveTrain {
     private final double FORWARD_POWER = .25;
     private final double halfSquareLength = 12; // Half a square tile (12 in.)
 
+
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor rearLeft;
     private DcMotor rearRight;
     private Supplier<Boolean> opModeIsActive;
-
 
 
     public MecanumDriveTrain(DcMotor frontLeft, DcMotor frontRight, DcMotor rearLeft, DcMotor rearRight, Supplier<Boolean> opModeIsActive) {
@@ -259,6 +260,8 @@ public class MecanumDriveTrain {
 
 
     }
+
+
     public void resetEncoders(){
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
