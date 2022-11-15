@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
+import org.firstinspires.ftc.teamcode.robot.Claw;
 
 @TeleOp(name="MainTeleOp", group ="Iterative OpMode")
 public class MainTeleOp extends LinearOpMode {
@@ -20,6 +21,7 @@ public class MainTeleOp extends LinearOpMode {
     private double drivetrainSensitivity = INITIAL_DRIVETRAIN_SENSITIVITY;
     private boolean wasSensitivityChangedLastLoop;
     private boolean isActive = true;
+    private Claw clawArm;
 
     @Override
     public void runOpMode() {
@@ -40,11 +42,15 @@ public class MainTeleOp extends LinearOpMode {
             setSensitivityChange();
             setDpadControl();
 
+            if (gamepad2.dpad_up){
+                clawArm.openClaw();
+            }
+
+            if (gamepad1.dpad_down){
+                clawArm.closeClaw();
+            }
+
             telemetry.update();
-
-
-
-
 
         }
     }

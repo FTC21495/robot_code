@@ -6,15 +6,35 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
+import org.firstinspires.ftc.robotcore.external.Supplier;
+
 
 public class Claw {
 
+    private Servo robotArm;
+    private TouchSensor touch;
+    private Supplier<Boolean> opModeIsActive;
+    private final double OPEN_POSITION_OF_CLAW = 1;//change later
+    private final double CLOSED_POSITION_OF_CLAW = 0;//change later
 
- private Servo robotArm;
- private TouchSensor touch;
 
+    public Claw(Servo robotArm, Supplier<Boolean> opModeIsActive){
+        this.robotArm = robotArm;
+        this.opModeIsActive = opModeIsActive;
 
+        this.robotArm.setDirection(Servo.Direction.FORWARD);
 
+        this.robotArm.setPosition(OPEN_POSITION_OF_CLAW);
+    }
+    public void openClaw(){
+
+            this.robotArm.setPosition(OPEN_POSITION_OF_CLAW);
+
+    }
+    public void closeClaw(){
+        this.robotArm.setPosition(CLOSED_POSITION_OF_CLAW);
+    }
+    //Buttons on claw that indicate to robot that it is holding the cup.
     public boolean senseCup  (boolean holdingCup) {return holdingCup;}
 
 

@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @TeleOp (group = "TeleOp", name = "servoTest")
-@Disabled
 public class ServoTest extends OpMode {
     private Servo servo;
 

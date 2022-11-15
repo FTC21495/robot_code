@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -21,7 +22,6 @@ public class Robot {
             GREEN,
             BLUE
     }
-
 
 
     private MecanumDriveTrain drivetrain;
@@ -79,6 +79,7 @@ public class Robot {
         drivetrain.manualControl(forwardPower,turnPower, strafePower);
 
     }
+
 
     public ColorSensorColor getColorFromColorSensor(){
 
