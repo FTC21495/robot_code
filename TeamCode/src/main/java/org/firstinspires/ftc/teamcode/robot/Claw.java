@@ -15,7 +15,7 @@ public class Claw {
     private TouchSensor touch;
     private Supplier<Boolean> opModeIsActive;
     private final double OPEN_POSITION_OF_CLAW = 1;//change later
-    private final double CLOSED_POSITION_OF_CLAW = 0;//change later
+    private final double CLOSED_POSITION_OF_CLAW = 0.5;//change later
 
 
     public Claw(Servo robotArm, Supplier<Boolean> opModeIsActive){
@@ -28,11 +28,13 @@ public class Claw {
     }
     public void openClaw(){
 
-            this.robotArm.setPosition(OPEN_POSITION_OF_CLAW);
+        robotArm.setPosition(OPEN_POSITION_OF_CLAW);
 
     }
     public void closeClaw(){
-        this.robotArm.setPosition(CLOSED_POSITION_OF_CLAW);
+
+        robotArm.setPosition(CLOSED_POSITION_OF_CLAW);
+
     }
     //Buttons on claw that indicate to robot that it is holding the cup.
     public boolean senseCup  (boolean holdingCup) {return holdingCup;}

@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.SwitchableLight;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -27,6 +28,7 @@ public class Robot {
     private MecanumDriveTrain drivetrain;
     ColorSensor colorSensor;
     private Telemetry telemetry;
+    private Claw claw;
 
 
     public Robot(HardwareMap hardwareMap, Supplier<Boolean>opModeIsActive, Telemetry telemetry) {
@@ -42,6 +44,9 @@ public class Robot {
             //SwitchableLight light = (SwitchableLight)colorSensor;
             //light.enableLight(false);
         //}
+
+        claw = new Claw(hardwareMap.get(Servo.class, "claw_servo"), opModeIsActive);
+
         this.telemetry = telemetry;
 
     }
@@ -78,6 +83,14 @@ public class Robot {
     public void manualMove (double forwardPower, double turnPower, double strafePower){
         drivetrain.manualControl(forwardPower,turnPower, strafePower);
 
+    }
+
+    public void openClaw(){
+        claw.openClaw();
+    }
+
+    public void closeClaw(){
+        claw.closeClaw();
     }
 
 
