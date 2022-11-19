@@ -13,6 +13,7 @@ public class ColorSensorTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Robot maple = new Robot(hardwareMap, this::opModeIsActive, telemetry);
 
+
         waitForStart();
 
         while (opModeIsActive()){
