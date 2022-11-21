@@ -46,7 +46,7 @@ public class Robot {
             //light.enableLight(false);
         //}
 
-        lift = hardwareMap.get(Lift.class, "lift");
+        lift = new Lift(hardwareMap.get(DcMotor.class, "lift"), telemetry);
 
         claw = new Claw(hardwareMap.get(Servo.class, "claw_servo"), opModeIsActive);
 
