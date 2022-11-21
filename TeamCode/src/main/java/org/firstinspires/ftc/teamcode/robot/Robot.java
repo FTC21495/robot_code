@@ -28,6 +28,7 @@ public class Robot {
     private MecanumDriveTrain drivetrain;
     ColorSensor colorSensor;
     private Telemetry telemetry;
+    Lift lift;
     private Claw claw;
 
 
@@ -45,10 +46,28 @@ public class Robot {
             //light.enableLight(false);
         //}
 
+        lift = hardwareMap.get(Lift.class, "lift");
+
         claw = new Claw(hardwareMap.get(Servo.class, "claw_servo"), opModeIsActive);
 
         this.telemetry = telemetry;
 
+    }
+
+    public void raiseLift(){
+
+        lift.liftUp();
+
+    }
+
+    public void lowerLift(){
+
+        lift.liftDown();
+
+    }
+
+    public void stopLift(){
+        lift.liftStop();
     }
 
     public void driveForward (double distanceInInches) {

@@ -42,10 +42,7 @@ public class MecanumDriveTrain {
         this.frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         this.rearRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        this.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.rearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.rearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        setModeToRunUsingEncoders();
 
         this.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.rearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -53,6 +50,26 @@ public class MecanumDriveTrain {
         this.rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
+    public void setModeToRunUsingEncoders(){
+        this.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.rearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.rearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void setModeToRunToPosition(){
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void setPowerToZero(){
+        frontLeft.setPower(0);
+        rearLeft.setPower(0);
+        frontRight.setPower(0);
+        rearRight.setPower(0);
+    }
 
     public void forward(double distanceInInches) {
         resetEncoders();
@@ -63,10 +80,7 @@ public class MecanumDriveTrain {
         frontRight.setTargetPosition(newTarget);
         rearRight.setTargetPosition(newTarget);
 
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        setModeToRunToPosition();
 
         frontLeft.setPower(FORWARD_POWER);
         rearLeft.setPower(FORWARD_POWER);
@@ -77,10 +91,9 @@ public class MecanumDriveTrain {
 
         }
 
-        frontLeft.setPower(0);
-        rearLeft.setPower(0);
-        frontRight.setPower(0);
-        rearRight.setPower(0);
+        setPowerToZero();
+
+        setModeToRunUsingEncoders();
 
     }
 
@@ -93,10 +106,7 @@ public class MecanumDriveTrain {
         frontRight.setTargetPosition(-newTarget);
         rearRight.setTargetPosition(-newTarget);
 
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        setModeToRunToPosition();
 
         frontLeft.setPower(-FORWARD_POWER);
         rearLeft.setPower(-FORWARD_POWER);
@@ -107,10 +117,9 @@ public class MecanumDriveTrain {
 
         }
 
-        frontLeft.setPower(0);
-        rearLeft.setPower(0);
-        frontRight.setPower(0);
-        rearRight.setPower(0);
+        setPowerToZero();
+
+        setModeToRunUsingEncoders();
 
     }
 
@@ -123,10 +132,7 @@ public class MecanumDriveTrain {
         frontRight.setTargetPosition(-newTarget);
         rearRight.setTargetPosition(-newTarget);
 
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        setModeToRunToPosition();
 
         frontLeft.setPower(FORWARD_POWER);
         rearLeft.setPower(FORWARD_POWER);
@@ -137,10 +143,9 @@ public class MecanumDriveTrain {
 
         }
 
-        frontLeft.setPower(0);
-        rearLeft.setPower(0);
-        frontRight.setPower(0);
-        rearRight.setPower(0);
+        setPowerToZero();
+
+        setModeToRunUsingEncoders();
     }
     public void turnLeft(double angleInDegreesClockwise) {
         resetEncoders();
@@ -151,10 +156,7 @@ public class MecanumDriveTrain {
         frontRight.setTargetPosition(newTarget);
         rearRight.setTargetPosition(newTarget);
 
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        setModeToRunToPosition();
 
         frontLeft.setPower(-FORWARD_POWER);
         rearLeft.setPower(-FORWARD_POWER);
@@ -165,10 +167,9 @@ public class MecanumDriveTrain {
 
         }
 
-        frontLeft.setPower(0);
-        rearLeft.setPower(0);
-        frontRight.setPower(0);
-        rearRight.setPower(0);
+        setPowerToZero();
+
+        setModeToRunUsingEncoders();
     }
 
     public void strafeRight(double distanceInInches) {
@@ -180,10 +181,7 @@ public class MecanumDriveTrain {
         frontRight.setTargetPosition(-newFrontTarget);
         rearRight.setTargetPosition(newBackTarget);
 
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        setModeToRunToPosition();
 
         frontLeft.setPower((FORWARD_POWER));
         rearLeft.setPower(-FORWARD_POWER);
@@ -194,12 +192,12 @@ public class MecanumDriveTrain {
 
         }
 
-        frontLeft.setPower(0);
-        rearLeft.setPower(0);
-        frontRight.setPower(0);
-        rearRight.setPower(0);
+        setPowerToZero();
+
+        setModeToRunUsingEncoders();
 
     }
+
     public void strafeLeft(double distanceInInches) {
         resetEncoders();
         int newFrontTarget = (int)(STRAFE_FRICTION_LOSS_DISTANCE_FACTOR_FRONT * (distanceInInches * ENCODER_TICKS_PER_INCH));
@@ -210,10 +208,7 @@ public class MecanumDriveTrain {
         frontRight.setTargetPosition(newFrontTarget);
         rearRight.setTargetPosition(-newBackTarget);
 
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        setModeToRunToPosition();
 
         frontLeft.setPower(-FORWARD_POWER);
         rearLeft.setPower(FORWARD_POWER);
@@ -224,10 +219,9 @@ public class MecanumDriveTrain {
 
         }
 
-        frontLeft.setPower(0);
-        rearLeft.setPower(0);
-        frontRight.setPower(0);
-        rearRight.setPower(0);
+        setPowerToZero();
+
+        setModeToRunUsingEncoders();
 
     }
 

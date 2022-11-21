@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.Claw;
+import org.firstinspires.ftc.teamcode.robot.Lift;
 
 @TeleOp(name="MainTeleOpV1", group ="Iterative OpMode")
 public class MainTeleOp extends LinearOpMode {
@@ -40,14 +41,8 @@ public class MainTeleOp extends LinearOpMode {
             setDrivetrainPower();
             setSensitivityChange();
             setDpadControl();
-
-            if (gamepad2.dpad_up){
-                maple.openClaw();
-            }
-
-            if (gamepad2.dpad_down){
-                maple.closeClaw();
-            }
+            setLiftControl();
+            setClawControl();
 
             telemetry.update();
 
@@ -85,9 +80,6 @@ public class MainTeleOp extends LinearOpMode {
     private void setDpadControl(){
         if (gamepad1.dpad_up){
             maple.driveForward(12);
-            if(gamepad1.b){
-
-            }
         }
         if (gamepad1.dpad_down){
             maple.driveBackwards(12);
@@ -101,6 +93,30 @@ public class MainTeleOp extends LinearOpMode {
 
     }
 
+    private void setLiftControl(){
+        if (gamepad2.left_bumper){
+            maple.lowerLift();
+        }
+
+        if (gamepad2.right_bumper){
+            maple.raiseLift();
+        }
+
+        if ((!gamepad2.right_bumper) && (!gamepad2.right_bumper)){
+            maple.stopLift();
+        }
+
+    }
+
+    private void setClawControl(){
+        if (gamepad2.dpad_up){
+            maple.openClaw();
+        }
+
+        if (gamepad2.dpad_down){
+            maple.closeClaw();
+        }
+    }
 }
 
 
