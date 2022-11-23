@@ -5,10 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.List;
-
 public class Lift {
 
     private final double LIFT_POWER = 1;
@@ -20,6 +16,7 @@ public class Lift {
 
 
 
+
     public Lift(DcMotor liftMotor, Telemetry telemetry) {
         this.liftMotor = liftMotor;
         this.telemetry = telemetry;
@@ -28,16 +25,17 @@ public class Lift {
         this.liftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
-    public void liftUp(){
 
-        liftMotor.setPower(1);
+    public void liftUp(double power){
+
+        liftMotor.setPower(power);
 
 
     }
 
-    public void liftDown(){
+    public void liftDown(double power){
 
-        liftMotor.setPower(-1);
+        liftMotor.setPower(-power);
 
 
     }

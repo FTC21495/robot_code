@@ -94,15 +94,11 @@ public class MainTeleOp extends LinearOpMode {
     }
 
     private void setLiftControl(){
-        if (gamepad2.left_bumper){
-            maple.lowerLift();
-        }
-
-        if (gamepad2.right_bumper){
-            maple.raiseLift();
-        }
-
-        if ((!gamepad2.right_bumper) && (!gamepad2.right_bumper)){
+        if (gamepad2.left_trigger > .1){
+            maple.lowerLift(gamepad2.left_trigger);
+        } else if(gamepad2.right_trigger > .1){
+            maple.raiseLift(gamepad2.right_trigger);
+        } else {
             maple.stopLift();
         }
 

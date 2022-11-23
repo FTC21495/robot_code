@@ -23,11 +23,11 @@ public class ServoTest extends OpMode {
 
 // When the claw comes in, we will have to switch this to gamepad 2.
         if (gamepad1.dpad_up){
-            servo.setPosition(currentPosition + 0.01);
+            servo.setPosition(currentPosition + 0.001);
         }
 
         if (gamepad1.dpad_down){
-            servo.setPosition(currentPosition - 0.01);
+            servo.setPosition(currentPosition - 0.001);
         }
 
         telemetry.update();
