@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.robot.LiftLevels;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.Claw;
 import org.firstinspires.ftc.teamcode.robot.Lift;
@@ -43,6 +44,7 @@ public class MainTeleOp extends LinearOpMode {
             setDpadControl();
             setLiftControl();
             setClawControl();
+            setLiftLevel();
 
             telemetry.update();
 
@@ -106,6 +108,21 @@ public class MainTeleOp extends LinearOpMode {
             maple.stopLift();
         }
 
+    }
+
+    private void setLiftLevel(){
+        if (gamepad2.a){
+            maple.setLiftPosition(LiftLevels.GROUND);
+        }
+        if (gamepad2.b){
+            maple.setLiftPosition(LiftLevels.LOW);
+        }
+        if (gamepad2.x){
+            maple.setLiftPosition(LiftLevels.MEDIUM);
+        }
+        if (gamepad2.y){
+            maple.setLiftPosition(LiftLevels.HIGH);
+        }
     }
 
     private void setClawControl(){

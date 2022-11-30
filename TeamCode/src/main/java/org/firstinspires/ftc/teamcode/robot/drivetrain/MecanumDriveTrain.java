@@ -261,7 +261,6 @@ public class MecanumDriveTrain {
         rearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
     }
 
     private boolean areMotorsBusy(){

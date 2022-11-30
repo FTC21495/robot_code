@@ -70,6 +70,14 @@ public class Robot {
         lift.liftStop();
     }
 
+    public void setLiftPosition(LiftLevels level){
+        lift.setTargetPosition(level);
+    }
+
+    public void getCurrentPosition(){
+        lift.getCurrentPosition();
+    }
+
     public void driveForward (double distanceInInches) {
         drivetrain.forward(distanceInInches);
 
