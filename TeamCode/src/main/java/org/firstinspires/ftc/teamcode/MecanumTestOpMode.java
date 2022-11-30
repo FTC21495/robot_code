@@ -70,6 +70,7 @@ public class MecanumTestOpMode extends OpMode {
     private void setDpadControl(){
         if (gamepad1.dpad_up){
             maple.driveForward(12);
+
         }
         if (gamepad1.dpad_down){
             maple.driveBackwards(12);
