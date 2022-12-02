@@ -15,7 +15,7 @@ public class Lift {
     private final double ENCODER_TICKS_PER_LIFT_INCH = (ENCODER_TICKS_PER_REV / LIFT_PULLEY_WHEEL_CIRCUMFERENCE_INCHES);
     private DcMotor liftMotor;
     private Telemetry telemetry;
-    private HashMap<LiftLevels, Integer> liftLevelMap;
+    private HashMap<LiftLevels, Integer> liftLevelMap = new HashMap<>();
     public Lift(DcMotor liftMotor, Telemetry telemetry) {
 
         this.liftMotor = liftMotor;
@@ -23,22 +23,24 @@ public class Lift {
 
         this.liftMotor.setPower(0);
         this.liftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        this.liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        liftLevelMap.put(LiftLevels.GROUND, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 1.5)));
-        liftLevelMap.put(LiftLevels.LOW, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 10)));
-        liftLevelMap.put(LiftLevels.MEDIUM, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 20)));
-        liftLevelMap.put(LiftLevels.HIGH, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 30)));
+        liftLevelMap.put(LiftLevels.GROUND, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 2)));
+        liftLevelMap.put(LiftLevels.LOW, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 12)));
+        liftLevelMap.put(LiftLevels.MEDIUM, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 22)));
+        liftLevelMap.put(LiftLevels.HIGH, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 32)));
     }
 
 
-    public void setTargetPosition(LiftLevels level){
+    public void goToTargetPosition(LiftLevels level){
         liftMotor.setTargetPosition(liftLevelMap.get(level));
+        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
     }
 
-    public void getCurrentPosition(){
-        liftMotor.getCurrentPosition();
+    public boolean isUp(){
+        return (liftMotor.getCurrentPosition() > (ENCODER_TICKS_PER_LIFT_INCH * 8));
     }
+
     public void liftUp(){
 
         liftMotor.setPower(1);

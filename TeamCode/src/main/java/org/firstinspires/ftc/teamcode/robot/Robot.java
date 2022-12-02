@@ -1,16 +1,9 @@
 package org.firstinspires.ftc.teamcode.robot;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
-import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.SwitchableLight;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.drivetrain.MecanumDriveTrain;
@@ -24,7 +17,7 @@ public class Robot {
             BLUE
     }
 
-
+    private final long SENSITIVITY_WHEN_LIFT_UP = 5;
     private MecanumDriveTrain drivetrain;
     ColorSensor colorSensor;
     private Telemetry telemetry;
@@ -71,11 +64,7 @@ public class Robot {
     }
 
     public void setLiftPosition(LiftLevels level){
-        lift.setTargetPosition(level);
-    }
-
-    public void getCurrentPosition(){
-        lift.getCurrentPosition();
+        lift.goToTargetPosition(level);
     }
 
     public void driveForward (double distanceInInches) {
@@ -108,8 +97,11 @@ public class Robot {
 
 
     public void manualMove (double forwardPower, double turnPower, double strafePower){
-        drivetrain.manualControl(forwardPower,turnPower, strafePower);
-
+        if (lift.isUp()){
+            drivetrain.manualControl((forwardPower / SENSITIVITY_WHEN_LIFT_UP),(turnPower / SENSITIVITY_WHEN_LIFT_UP), (strafePower / SENSITIVITY_WHEN_LIFT_UP));
+        }   else {
+            drivetrain.manualControl(forwardPower, turnPower, strafePower);
+        }
     }
 
     public void openClaw(){
