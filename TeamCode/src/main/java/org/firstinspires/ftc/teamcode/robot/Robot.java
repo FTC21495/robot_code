@@ -1,16 +1,9 @@
 package org.firstinspires.ftc.teamcode.robot;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
-import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.SwitchableLight;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.drivetrain.MecanumDriveTrain;
@@ -19,9 +12,9 @@ import org.firstinspires.ftc.robotcore.external.Supplier;
 public class Robot {
 
     public enum ColorSensorColor {
-            RED,
-            GREEN,
-            BLUE
+        BLACK,
+        WHITE,
+        GRAY
     }
 
 
@@ -41,10 +34,6 @@ public class Robot {
                 opModeIsActive
         );
         colorSensor = hardwareMap.get(ColorSensor.class, "front_color_sensor" );
-        //if (colorSensor instanceof SwitchableLight) {
-            //SwitchableLight light = (SwitchableLight)colorSensor;
-            //light.enableLight(false);
-        //}
 
         lift = new Lift(hardwareMap.get(DcMotor.class, "lift"), telemetry);
 
@@ -115,14 +104,11 @@ public class Robot {
 
     public ColorSensorColor getColorFromColorSensor(){
 
-        //light.enableLight(true);
-
-
-        //light.enableLight(false);
 
         float redSaturation = colorSensor.red();
         float blueSaturation = colorSensor.blue();
         float greenSaturation = colorSensor.green();
+        float totalPigment = redSaturation + blueSaturation + greenSaturation;
 
         telemetry.addLine()
                 .addData("Red", "%.3f", redSaturation)
@@ -130,18 +116,19 @@ public class Robot {
                 .addData("Blue", "%.3f", blueSaturation);
         telemetry.update();
 
-        if ((redSaturation > blueSaturation) && (redSaturation > greenSaturation)){
+        if ((totalPigment >50)){
 
-            return ColorSensorColor.RED;
+            return ColorSensorColor.BLACK;
 
-        } else if ((blueSaturation > redSaturation) && (blueSaturation > greenSaturation)){
+        } else if (totalPigment <15){
 
-            return ColorSensorColor.BLUE;//Seems backwards, is what color sensor actually read
+            return ColorSensorColor.WHITE;
 
         }
+        else {
 
-        return ColorSensorColor.GREEN;//Seems backwards, is what color sensor actually read
-
+            return ColorSensorColor.GRAY;
+        }
     }
 
 

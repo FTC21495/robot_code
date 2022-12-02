@@ -16,24 +16,24 @@ public class AutonomousDriveTrainTest extends LinearOpMode {
 
         waitForStart();
         maple.openClaw();
-        maple.driveForward(20);
+        maple.driveForward(21);
 
         switch (maple.getColorFromColorSensor()) {
 
-            case RED:                               // 1
+            case BLACK:                               // 1
                 maple.driveBackwards(17);
                 maple.closeClaw();
                 maple.strafeLeft(24);
                 maple.driveForward(27);
                 break;
 
-            case BLUE:                             // 2
+            case GRAY:// 2
                 maple.driveBackwards(12);
                 maple.closeClaw();
                 maple.driveForward(22);
                 break;
 
-            case GREEN:                              // 3
+            case WHITE:                              // 3
                 maple.driveBackwards(17);
                 maple.closeClaw();
                 maple.strafeRight(24);
