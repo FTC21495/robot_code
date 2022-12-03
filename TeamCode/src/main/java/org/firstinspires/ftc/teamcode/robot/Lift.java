@@ -13,6 +13,7 @@ public class Lift {
     private final long ENCODER_TICKS_PER_REV = 538;//5203 Motor
     private final double LIFT_PULLEY_WHEEL_CIRCUMFERENCE_INCHES = 4.40945;// 3407 Hub-Mount Winch Pulley; mm circumference to inches
     private final double ENCODER_TICKS_PER_LIFT_INCH = (ENCODER_TICKS_PER_REV / LIFT_PULLEY_WHEEL_CIRCUMFERENCE_INCHES);
+    private final double STOP_MOTOR_POWER = .05;
     private DcMotor liftMotor;
     private Telemetry telemetry;
     private HashMap<LiftLevels, Integer> liftLevelMap = new HashMap<>();
@@ -22,7 +23,7 @@ public class Lift {
         this.telemetry = telemetry;
 
         this.liftMotor.setPower(0);
-        this.liftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.liftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         liftLevelMap.put(LiftLevels.GROUND, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 2)));
         liftLevelMap.put(LiftLevels.LOW, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 12)));
@@ -41,21 +42,21 @@ public class Lift {
         return (liftMotor.getCurrentPosition() > (ENCODER_TICKS_PER_LIFT_INCH * 8));
     }
 
-    public void liftUp(){
+    public void liftUp(double power){
 
-        liftMotor.setPower(1);
+        liftMotor.setPower(power);
 
     }
 
-    public void liftDown(){
+    public void liftDown(double power){
 
-        liftMotor.setPower(-1);
+        liftMotor.setPower((-power / 3));
 
     }
 
     public void liftStop(){
 
-        liftMotor.setPower(0);
+        liftMotor.setPower(STOP_MOTOR_POWER);
 
     }
 

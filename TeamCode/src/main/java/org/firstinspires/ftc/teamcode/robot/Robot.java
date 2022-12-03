@@ -47,15 +47,15 @@ public class Robot {
 
     }
 
-    public void raiseLift(){
+    public void raiseLift(double power){
 
-        lift.liftUp();
+        lift.liftUp(power);
 
     }
 
-    public void lowerLift(){
+    public void lowerLift(double power){
 
-        lift.liftDown();
+        lift.liftDown(power);
 
     }
 
@@ -104,11 +104,11 @@ public class Robot {
         }
     }
 
-    public void openClaw(){
+    public void letGoOfCup(){
         claw.openClaw();
     }
 
-    public void closeClaw(){
+    public void grabCup(){
         claw.closeClaw();
     }
 

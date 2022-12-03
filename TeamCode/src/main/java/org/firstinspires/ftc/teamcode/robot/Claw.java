@@ -35,11 +35,9 @@ public class Claw {
 
         robotArm.setPosition(CLOSED_POSITION_OF_CLAW);
 
+
     }
     //Buttons on claw that indicate to robot that it is holding the cup.
-    public boolean senseCup  (boolean holdingCup) {return holdingCup;}
-
-
 
 
 }

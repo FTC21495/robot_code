@@ -3,12 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.robot.LiftLevels;
 import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.teamcode.robot.Claw;
-import org.firstinspires.ftc.teamcode.robot.Lift;
 
 @TeleOp(name="MainTeleOpV1", group ="Iterative OpMode")
 public class MainTeleOp extends LinearOpMode {
@@ -96,15 +93,11 @@ public class MainTeleOp extends LinearOpMode {
     }
 
     private void setLiftControl(){
-        if (gamepad2.left_bumper){
-            maple.lowerLift();
-        }
-
-        if (gamepad2.right_bumper){
-            maple.raiseLift();
-        }
-
-        if ((!gamepad2.right_bumper) && (!gamepad2.right_bumper)){
+        if (gamepad2.left_trigger > .1){
+            maple.lowerLift(gamepad2.left_trigger);
+        } else if(gamepad2.right_trigger > .1){
+            maple.raiseLift(gamepad2.right_trigger);
+        } else {
             maple.stopLift();
         }
 
@@ -127,11 +120,11 @@ public class MainTeleOp extends LinearOpMode {
 
     private void setClawControl(){
         if (gamepad2.dpad_up){
-            maple.openClaw();
+            maple.letGoOfCup();
         }
 
         if (gamepad2.dpad_down){
-            maple.closeClaw();
+            maple.grabCup();
         }
     }
 }
