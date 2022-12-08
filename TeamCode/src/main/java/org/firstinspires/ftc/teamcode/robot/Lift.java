@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.robotcore.external.Supplier;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.HashMap;
@@ -17,24 +18,47 @@ public class Lift {
     private DcMotor liftMotor;
     private Telemetry telemetry;
     private HashMap<LiftLevels, Integer> liftLevelMap = new HashMap<>();
-    public Lift(DcMotor liftMotor, Telemetry telemetry) {
+    private Supplier<Boolean> opModeIsActive;
+    public Lift(DcMotor liftMotor, Telemetry telemetry, Supplier<Boolean>opModeIsActive) {
 
         this.liftMotor = liftMotor;
         this.telemetry = telemetry;
+        this.opModeIsActive = opModeIsActive;
 
         this.liftMotor.setPower(0);
         this.liftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         liftLevelMap.put(LiftLevels.GROUND, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 2)));
-        liftLevelMap.put(LiftLevels.LOW, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 12)));
-        liftLevelMap.put(LiftLevels.MEDIUM, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 22)));
-        liftLevelMap.put(LiftLevels.HIGH, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 32)));
+        liftLevelMap.put(LiftLevels.LOW, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 15)));
+        liftLevelMap.put(LiftLevels.MEDIUM, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 25)));
+        liftLevelMap.put(LiftLevels.HIGH, new Integer((int) (ENCODER_TICKS_PER_LIFT_INCH * 35)));
     }
 
+    private void getLiftTelemetry(){
+        telemetry.addLine()
+                .addData("lift encoder",liftMotor.getCurrentPosition());
+        telemetry.update();
+    }
+
+    public boolean isBusy(){
+        return liftMotor.isBusy();
+    }
 
     public void goToTargetPosition(LiftLevels level){
+
         liftMotor.setTargetPosition(liftLevelMap.get(level));
+
         liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        liftMotor.setPower(LIFT_POWER);
+
+        while (isBusy() && opModeIsActive.get()) {
+
+        }
+
+        liftMotor.setPower(0);
+
+        getLiftTelemetry();
 
     }
 
@@ -46,17 +70,23 @@ public class Lift {
 
         liftMotor.setPower(power);
 
+        getLiftTelemetry();
+
     }
 
     public void liftDown(double power){
 
         liftMotor.setPower((-power / 3));
 
+        getLiftTelemetry();
+
     }
 
     public void liftStop(){
 
         liftMotor.setPower(STOP_MOTOR_POWER);
+
+        getLiftTelemetry();
 
     }
 

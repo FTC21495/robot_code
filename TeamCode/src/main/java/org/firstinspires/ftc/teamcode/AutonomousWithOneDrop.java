@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.robot.LiftLevels;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
-@Autonomous(name="Robot: Auto Drive By Encoder", group="Robot")
-public class AutonomousDriveTrainTest extends LinearOpMode {
+@Autonomous(name="Autonomous With One Drop", group="Robot")
+public class AutonomousWithOneDrop extends LinearOpMode {
 
-    private int COLOR_DETECTED;
+    private String COLOR_DETECTED;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -17,9 +17,23 @@ public class AutonomousDriveTrainTest extends LinearOpMode {
 
         waitForStart();
 
-        maple.setLiftPosition(LiftLevels.GROUND);
+        maple.grabCup();
 
-        maple.driveForwardBlocking(21.5);
+        Thread.sleep(3000);
+
+        maple.setLiftPosition(LiftLevels.LOW);
+
+        maple.driveForwardBlocking(11);
+
+        maple.letGoOfCup();
+
+        Thread.sleep(500);
+
+        maple.driveBackwardsBlocking(4.5);
+
+        maple.strafeLeftBlocking(12);
+
+        maple.driveForwardBlocking(14);
 
         switch (maple.getColorFromColorSensor()) {
 
@@ -39,7 +53,6 @@ public class AutonomousDriveTrainTest extends LinearOpMode {
                 maple.driveBackwardsBlocking(27);
                 break;
         }
-
         telemetry.update();
 
     }

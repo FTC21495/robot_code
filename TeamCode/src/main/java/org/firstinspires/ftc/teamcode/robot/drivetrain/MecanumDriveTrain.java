@@ -4,7 +4,6 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gam
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 
 import org.firstinspires.ftc.robotcore.external.Supplier;
 
@@ -22,27 +21,21 @@ public class MecanumDriveTrain {
     private final double FORWARD_POWER = .25;
     private final double halfSquareLength = 12; // Half a square tile (12 in.)
 
-
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor rearLeft;
     private DcMotor rearRight;
-    private Supplier<Boolean> opModeIsActive;
-
 
     public MecanumDriveTrain(DcMotor frontLeft, DcMotor frontRight, DcMotor rearLeft, DcMotor rearRight, Supplier<Boolean> opModeIsActive) {
         this.frontLeft = frontLeft;
         this.frontRight = frontRight;
         this.rearLeft = rearLeft;
         this.rearRight = rearRight;
-        this.opModeIsActive = opModeIsActive;
 
         this.frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         this.rearLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         this.frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         this.rearRight.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        setModeToRunUsingEncoders();
 
         this.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.rearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -50,12 +43,6 @@ public class MecanumDriveTrain {
         this.rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void setModeToRunUsingEncoders(){
-        this.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.rearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.rearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
 
     public void setModeToRunToPosition(){
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -80,20 +67,12 @@ public class MecanumDriveTrain {
         frontRight.setTargetPosition(newTarget);
         rearRight.setTargetPosition(newTarget);
 
-        setModeToRunToPosition();
+        startRunningUsingEncoders();
 
         frontLeft.setPower(FORWARD_POWER);
         rearLeft.setPower(FORWARD_POWER);
         frontRight.setPower(FORWARD_POWER);
         rearRight.setPower(FORWARD_POWER);
-
-        while (areMotorsBusy() && opModeIsActive.get()) {
-
-        }
-
-        setPowerToZero();
-
-        setModeToRunUsingEncoders();
 
     }
 
@@ -106,20 +85,13 @@ public class MecanumDriveTrain {
         frontRight.setTargetPosition(-newTarget);
         rearRight.setTargetPosition(-newTarget);
 
-        setModeToRunToPosition();
+        startRunningUsingEncoders();
 
         frontLeft.setPower(-FORWARD_POWER);
         rearLeft.setPower(-FORWARD_POWER);
         frontRight.setPower(-FORWARD_POWER);
         rearRight.setPower(-FORWARD_POWER);
 
-        while (areMotorsBusy() && opModeIsActive.get()) {
-
-        }
-
-        setPowerToZero();
-
-        setModeToRunUsingEncoders();
 
     }
 
@@ -132,20 +104,13 @@ public class MecanumDriveTrain {
         frontRight.setTargetPosition(-newTarget);
         rearRight.setTargetPosition(-newTarget);
 
-        setModeToRunToPosition();
+        startRunningUsingEncoders();
 
         frontLeft.setPower(FORWARD_POWER);
         rearLeft.setPower(FORWARD_POWER);
         frontRight.setPower(-(FORWARD_POWER));
         rearRight.setPower(-(FORWARD_POWER));
 
-        while (areMotorsBusy() && opModeIsActive.get()) {
-
-        }
-
-        setPowerToZero();
-
-        setModeToRunUsingEncoders();
     }
     public void turnLeft(double angleInDegreesClockwise) {
         resetEncoders();
@@ -156,20 +121,13 @@ public class MecanumDriveTrain {
         frontRight.setTargetPosition(newTarget);
         rearRight.setTargetPosition(newTarget);
 
-        setModeToRunToPosition();
+        startRunningUsingEncoders();
 
         frontLeft.setPower(-FORWARD_POWER);
         rearLeft.setPower(-FORWARD_POWER);
         frontRight.setPower((FORWARD_POWER));
         rearRight.setPower((FORWARD_POWER));
 
-        while (areMotorsBusy() && opModeIsActive.get()) {
-
-        }
-
-        setPowerToZero();
-
-        setModeToRunUsingEncoders();
     }
 
     public void strafeRight(double distanceInInches) {
@@ -181,20 +139,12 @@ public class MecanumDriveTrain {
         frontRight.setTargetPosition(-newFrontTarget);
         rearRight.setTargetPosition(newBackTarget);
 
-        setModeToRunToPosition();
+        startRunningUsingEncoders();
 
         frontLeft.setPower((FORWARD_POWER));
         rearLeft.setPower(-FORWARD_POWER);
         frontRight.setPower(-FORWARD_POWER);
         rearRight.setPower((FORWARD_POWER));
-
-        while (areMotorsBusy() && opModeIsActive.get()) {
-
-        }
-
-        setPowerToZero();
-
-        setModeToRunUsingEncoders();
 
     }
 
@@ -208,20 +158,13 @@ public class MecanumDriveTrain {
         frontRight.setTargetPosition(newFrontTarget);
         rearRight.setTargetPosition(-newBackTarget);
 
-        setModeToRunToPosition();
+        startRunningUsingEncoders();
 
         frontLeft.setPower(-FORWARD_POWER);
         rearLeft.setPower(FORWARD_POWER);
         frontRight.setPower(FORWARD_POWER);
         rearRight.setPower(-FORWARD_POWER);
 
-        while (areMotorsBusy() && opModeIsActive.get()) {
-
-        }
-
-        setPowerToZero();
-
-        setModeToRunUsingEncoders();
 
     }
 
@@ -263,7 +206,7 @@ public class MecanumDriveTrain {
         rearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    private boolean areMotorsBusy(){
+    public boolean isBusy(){
         return frontLeft.isBusy() && rearLeft.isBusy() && frontRight.isBusy() && rearRight.isBusy();
     }
 
@@ -283,6 +226,19 @@ public class MecanumDriveTrain {
         }
     }
 
+    public void startRunningUsingEncoders(){
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void stopRunningUsingEncoders(){
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
 }
 
 

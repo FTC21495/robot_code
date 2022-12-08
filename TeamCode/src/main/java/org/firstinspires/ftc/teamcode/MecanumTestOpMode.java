@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.robot.Robot;
@@ -69,16 +66,16 @@ public class MecanumTestOpMode extends OpMode {
 
     private void setDpadControl(){
         if (gamepad1.dpad_up){
-            maple.driveForward(12);
+            maple.driveForwardBlocking(12);
         }
         if (gamepad1.dpad_down){
-            maple.driveBackwards(12);
+            maple.driveBackwardsBlocking(12);
         }
         if (gamepad1.dpad_right){
-            maple.strafeRight(12);
+            maple.strafeRightBlocking(12);
         }
         if (gamepad1.dpad_left){
-            maple.strafeLeft(12);
+            maple.strafeLeftBlocking(12);
         }
 
     }

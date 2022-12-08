@@ -26,12 +26,12 @@ public class Claw {
 
         this.robotArm.setPosition(OPEN_POSITION_OF_CLAW);
     }
-    public void openClaw(){
+    public void letGoOfCup(){
 
         robotArm.setPosition(OPEN_POSITION_OF_CLAW);
 
     }
-    public void closeClaw(){
+    public void grabCup(){
 
         robotArm.setPosition(CLOSED_POSITION_OF_CLAW);
 
