@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gam
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -13,6 +14,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.SwitchableLight;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.robot.drivetrain.MecanumDriveTrain;
 import org.firstinspires.ftc.robotcore.external.Supplier;
 
@@ -26,7 +28,7 @@ public class Robot {
 
 
     private MecanumDriveTrain drivetrain;
-    ColorSensor colorSensor;
+    RevColorSensorV3 colorSensor;
     private Telemetry telemetry;
     Lift lift;
     private Claw claw;
@@ -40,7 +42,7 @@ public class Robot {
                 hardwareMap.get(DcMotor.class, "right_rear_drive"),
                 opModeIsActive
         );
-        colorSensor = hardwareMap.get(ColorSensor.class, "front_color_sensor" );
+        colorSensor = hardwareMap.get(RevColorSensorV3.class, "front_color_sensor" );
         //if (colorSensor instanceof SwitchableLight) {
             //SwitchableLight light = (SwitchableLight)colorSensor;
             //light.enableLight(false);
@@ -123,11 +125,13 @@ public class Robot {
         float redSaturation = colorSensor.red();
         float blueSaturation = colorSensor.blue();
         float greenSaturation = colorSensor.green();
+        double proximity = colorSensor.getDistance(DistanceUnit.INCH);
 
         telemetry.addLine()
                 .addData("Red", "%.3f", redSaturation)
                 .addData("Green", "%.3f", greenSaturation)
-                .addData("Blue", "%.3f", blueSaturation);
+                .addData("Blue", "%.3f", blueSaturation)
+                        .addData("Proximity","%.3f",proximity);
         telemetry.update();
 
         if ((redSaturation > blueSaturation) && (redSaturation > greenSaturation)){
