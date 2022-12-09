@@ -19,14 +19,14 @@ public class AutonomousDriveTrainTest extends LinearOpMode {
 
         maple.setLiftPosition(LiftLevels.GROUND);
 
-        maple.driveForwardBlocking(21.5);
+        maple.driveForwardBlocking(23);
 
         switch (maple.getColorFromColorSensor()) {
 
             case RED:                               // 1
                 maple.driveBackwardsBlocking(17);
                 maple.strafeLeftBlocking(24);
-                maple.driveForwardBlocking(27);
+                maple.driveForwardBlocking(24);
                 break;
 
             case BLUE:                             // 2
@@ -34,9 +34,9 @@ public class AutonomousDriveTrainTest extends LinearOpMode {
                 break;
 
             case GREEN:                              // 3
-                maple.driveForwardBlocking(17);
-                maple.strafeLeftBlocking(24);
-                maple.driveBackwardsBlocking(27);
+                maple.driveBackwardsBlocking(17);
+                maple.strafeRightBlocking(24);
+                maple.driveForwardBlocking(24);
                 break;
         }
 

@@ -183,7 +183,8 @@ public class Robot {
                 .addData("Blue", "%.3f", blueSaturation);
         telemetry.update();
 
-        if ((greenSaturation - redSaturation) < 100 && (blueSaturation < greenSaturation)){
+        //if ((greenSaturation - redSaturation) < 100 && (blueSaturation < greenSaturation)){
+        if (((greenSaturation-redSaturation) < 30) && (blueSaturation > greenSaturation)){
 
             return ColorSensorColor.RED;
 
